@@ -2,19 +2,16 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/app/node_modules
 
-### IntelliJ IDEA ###
 .idea
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-
-### Mac OS ###
 .DS_Store
 
 .env
+.env.local
+.env.development
+.env.production
+
+.next
+next-env.d.ts
+

@@ -1,19 +1,16 @@
 # Workwise
 
-Just a little school project for our software architecture class.
+Just a simple microservice project for our software architecture class.
 
-## Get Started
+## Data Diagram
 
-Setup the environment variables in your Tomcat configuration:
+Below is a simple diagram that shows the interactions between the services.
 
-```sh
-# mySQL Connection
-DATABASE_URL="database url"
-DATABASE_USERNAME="database username"
-DATABASE_PASSWORD="database password"
+<img src="/data-diagram.jpg" alt="data diagram">
 
-# Google OAuth
-REDIRECT_URL=""
-CLIENT_ID=""
-CLIENT_SECRET=""
-```
+- dark-pink: authentication flow
+- pink: authorization flow
+- purple: resource providers
+- blue: get/persist resources
+
+## Getting Started

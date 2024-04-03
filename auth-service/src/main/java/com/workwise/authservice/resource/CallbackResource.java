@@ -11,7 +11,8 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.gson.Gson;
 import com.workwise.authservice.model.ResponseTokens;
 import com.workwise.authservice.model.User;
-import com.workwise.authservice.service.CandidateService;
+import com.workwise.authservice.repository.UserRepository;
+import com.workwise.authservice.util.Cookie;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -24,7 +25,7 @@ import java.util.Optional;
 @Path("/callback")
 public class CallbackResource {
     public static final String ROOT = "https://www.googleapis.com/oauth2/v4/token";
-    public static final String SUCCESS_REDIRECT_URL = "http://localhost:8080/callback";
+    public static final String SUCCESS_REDIRECT_URL = "http://localhost:3000/";
     @GET
     @Produces("application/json")
     public Response handleCallback(@QueryParam("code") String code) {
@@ -48,7 +49,7 @@ public class CallbackResource {
             DecodedJWT decodedJWT = JWT.decode(encodedJWT);
             String email = decodedJWT.getClaim("email").asString();
 
-            Optional<User> userOptional = CandidateService.getUserByEmail(email);
+            Optional<User> userOptional = UserRepository.findUserByEmail(email);
 
             if (userOptional.isEmpty()) return Response.status(Response.Status.UNAUTHORIZED)
                     .entity("No User Found")
@@ -57,9 +58,10 @@ public class CallbackResource {
             User user = userOptional.get();
             Map<String, String> map = new HashMap<>();
             map.put("id", user.getId());
-            map.put("email", user.getProvider().getEmail());
+            map.put("email", user.getEmail());
             map.put("firstName", user.getFirstName());
             map.put("lastName", user.getLastName());
+            map.put("role", user.getRole());
             map.put("image", user.getImage());
 
             Algorithm algorithm = Algorithm.HMAC256(System.getenv("JWT_SECRET"));
@@ -68,7 +70,13 @@ public class CallbackResource {
                     .withPayload(map)
                     .sign(algorithm);
 
-            return Response.temporaryRedirect(new URI(SUCCESS_REDIRECT_URL + "?code=" + token))
+            Cookie jwt = new Cookie("workwise", token);
+            jwt.setMaxAge(3600);
+            jwt.isHTTP(true);
+            jwt.setPath("/");
+
+            return Response.temporaryRedirect(new URI( SUCCESS_REDIRECT_URL))
+                    .header("Set-Cookie", jwt.toString())
                     .build();
         } catch (Exception e) {
             // TODO redirect to 500 error page on client

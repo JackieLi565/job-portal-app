@@ -1,4 +1,4 @@
-package com.workwise.candidateservice.common;
+package com.workwise.userservice.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

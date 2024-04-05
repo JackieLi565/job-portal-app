@@ -20,6 +20,6 @@ public class JobResource {
         if (hasLoc) loc = loc.replace("+", " ");
 
         Gson gson = new Gson();
-        return Response.status(Response.Status.OK).entity(gson.toJson(JobRepository.findByFilter(title, loc))).build();
+        return Response.status(Response.Status.OK).entity(gson.toJson(JobRepository.findByFilter(title, loc))).header("Access-Control-Allow-Origin", "*").build();
     }
 }

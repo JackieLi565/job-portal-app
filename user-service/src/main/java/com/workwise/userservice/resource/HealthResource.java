@@ -1,4 +1,4 @@
-package com.workwise.candidateservice.resource;
+package com.workwise.userservice.resource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

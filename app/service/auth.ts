@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = `${process.env.DOMAIN}${process.env.AUTH_SERVICE}`;
+const baseURL = `http://${process.env.NEXT_PUBLIC_DOMAIN}${process.env.NEXT_PUBLIC_AUTH_SERVICE}`;
 const instance = axios.create({
   baseURL,
 });

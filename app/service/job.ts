@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = `${process.env.DOMAIN}${process.env.JOB_SERVICE}`;
+const baseURL = `${process.env.NEXT_PUBLIC_DOMAIN}${process.env.NEXT_PUBLIC_JOB_SERVICE}`;
 const instance = axios.create({
   baseURL,
 });

@@ -1,29 +1,28 @@
-package com.workwise.candidateservice.model;
+package com.workwise.userservice.model;
 
-public class Candidate extends User {
-    private String candidateId;
+public class Candidate {
+    private final UserData userData;
+    private final String id;
     private String experience;
     private String skills;
     private String description;
     private boolean searchable;
 
-    public Candidate(String userId, Provider provider, String firstname, String lastname, String image,
-                     String candidateId, String experience, String skills, String description, boolean searchable) {
-
-        super(provider, userId, firstname, lastname, image);
-        this.candidateId = candidateId;
+    public Candidate(UserData UserData, String id, String experience, String skills, String description, boolean searchable) {
+        this.userData = UserData;
+        this.id = id;
         this.experience = experience;
         this.skills = skills;
         this.description = description;
         this.searchable = searchable;
     }
 
-    public String getCandidateId() {
-        return this.candidateId;
+    public UserData getUserData() {
+        return this.userData;
     }
 
-    public void setCandidateId(String candidateId) {
-        this.candidateId = candidateId;
+    public String getId() {
+        return this.id;
     }
 
     public String getExperience() {

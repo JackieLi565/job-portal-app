@@ -18,7 +18,7 @@
         javax.ws.rs.Application
       </param-name>
       <param-value>
-        com.workwise.candidateservice.Application
+        com.workwise.userservice.Application
       </param-value>
     </init-param>
 

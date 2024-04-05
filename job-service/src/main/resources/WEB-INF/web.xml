@@ -21,7 +21,6 @@
         com.workwise.jobservice.Application
       </param-value>
     </init-param>
-
   </servlet>
   <servlet-mapping>
     <servlet-name>RestServlet</servlet-name>

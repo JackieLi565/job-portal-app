@@ -9,7 +9,7 @@ type Props = {
 const JobFullCard: FC<Props> = ({ jobData }) => {
   useEffect(() => {
     const handler = async () => {
-      const _ = await incJobViewCount(jobData.id);
+      // const _ = await incJobViewCount(jobData.id);
     };
 
     handler();

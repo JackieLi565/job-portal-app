@@ -1,20 +1,32 @@
 "use client";
-import { JobPosting } from "@/service/job";
+import { JobPosting, getJobPostings } from "@/service/job";
 import { useSearchParams } from "next/navigation";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import JobPreviewCard from "../Cards/JobPreview";
 
-type Props = {
-  jobPostings: JobPosting[];
-};
-
-const JobContainer: FC<Props> = ({ jobPostings }) => {
+const JobContainer: FC = () => {
   const searchParams = useSearchParams();
   const selectedJobId = searchParams.get("selected");
+  const location = searchParams.get("loc");
+  const keyword = searchParams.get("keyword");
 
-  const selectedJob = selectedJobId
-    ? getSelectedJobData(selectedJobId, jobPostings)
-    : undefined;
+  const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
+
+  useEffect(() => {
+    const handler = async () => {
+      const res = await getJobPostings();
+      console.log(res);
+
+      setJobPostings(res.data);
+    };
+
+    handler();
+  }, [location, keyword]);
+
+  const selectedJob =
+    selectedJobId && jobPostings
+      ? getSelectedJobData(selectedJobId, jobPostings)
+      : undefined;
 
   return (
     <div
@@ -22,20 +34,21 @@ const JobContainer: FC<Props> = ({ jobPostings }) => {
         selectedJobId ? "w-[45%]" : "w-full"
       }`}
     >
-      {jobPostings.map(({ id, title, company, location, description }) => (
-        <JobPreviewCard
-          id={id}
-          title={title}
-          company={company}
-          loc={location}
-          description={description}
-        />
-      ))}
+      {jobPostings &&
+        jobPostings.map(({ id, title, company, location, description }) => (
+          <JobPreviewCard
+            key={id}
+            id={id}
+            title={title}
+            company={company}
+            loc={location}
+            description={description}
+          />
+        ))}
     </div>
   );
 };
 
-// @ts-ignore
 const getSelectedJobData = (jobId: string, jobPostings: JobPosting[]) => {
   for (const posting of jobPostings) {
     if (jobId === posting.id) return posting;

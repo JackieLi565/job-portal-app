@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.workwise</groupId>
-  <artifactId>candidate-service</artifactId>
+  <artifactId>user-service</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>candidate-service</name>
+  <name>user-service</name>
   <packaging>war</packaging>
 
   <properties>
@@ -52,6 +52,7 @@
     </dependencies>
 
   <build>
+    <finalName>user-service</finalName>
     <plugins>
 <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -1,4 +1,4 @@
-package com.workwise.candidateservice;
+package com.workwise.userservice;
 
 import javax.ws.rs.ApplicationPath;
 

@@ -6,7 +6,9 @@ import io.kubemq.sdk.basic.ServerAddressNotSuppliedException;
 import javax.net.ssl.SSLException;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
+@WebListener
 public class SignupEmailListener implements ServletContextListener {
 
         @Override

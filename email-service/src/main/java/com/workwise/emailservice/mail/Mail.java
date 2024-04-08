@@ -1,6 +1,7 @@
 package com.workwise.emailservice.mail;
 
 import javax.mail.*;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -12,20 +13,27 @@ public class Mail {
             + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
-    public static void sendSignupEmail(String addr) throws MessagingException, IllegalArgumentException {
+    public static void sendSignupEmail(String addr) throws IllegalArgumentException {
         Session session = Session.getInstance(properties(), getAuth());
 
         Message message = new MimeMessage(session);
 
-        message.setSubject("Thank you for signing up to Workwise");
-        message.setText("Thank you for signing up");
 
         if (validateEmail(addr)) {
-            Address address = new InternetAddress(addr);
+            try {
+                message.setSubject("Thank you for signing up to Workwise");
+                message.setText("Thank you for signing up");
 
-            message.setRecipient(Message.RecipientType.TO, address);
+                Address address = new InternetAddress(addr);
 
-            Transport.send(message);
+                message.setRecipient(Message.RecipientType.TO, address);
+
+                Transport.send(message);
+            } catch (AddressException e) {
+                throw new RuntimeException(e);
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             throw new IllegalArgumentException("invalid email");
         }
